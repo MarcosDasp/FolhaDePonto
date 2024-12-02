@@ -1,13 +1,14 @@
-@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Lora:ital,wght@0,400..700;1,400..700&family=Oswald:wght@200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;600;700&display=swap');
 
 body {
     font-family: "Poppins", serif;
     text-align: center;
     margin-top: 50px;
+    padding: 0 10px; /* Espaçamento para evitar que o conteúdo encoste nas bordas */
 }
 
 h1 {
-    font-size: 3.5rem;
+    font-size: 2.5rem;
     margin: 0;
 }
 
@@ -21,22 +22,30 @@ h1 {
     text-transform: uppercase;
 }
 
+/* Tabela */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
+    overflow-x: auto;
+    table-layout: fixed; /* Ajusta as colunas automaticamente */
 }
+
 th, td {
     border: 1px solid #ccc;
     padding: 8px;
     text-align: center;
+    word-wrap: break-word; /* Evita que o texto estoure as células */
 }
+
 th {
     background-color: #f4f4f4;
 }
+
 tr:nth-child(even) {
     background-color: #f9f9f9;
 }
+
 tr:hover {
     background-color: #f1f1f1;
 }
@@ -47,55 +56,103 @@ input {
     border: 1px solid #ccc;
     border-radius: 4px;
     text-align: center;
+    width: 100%;
 }
-/* Remove o ícone da seta do <select> */
+
 select {
-    -webkit-appearance: none; /* Remove no Safari/Chrome */
-    -moz-appearance: none; /* Remove no Firefox */
-    appearance: none; /* Remove no padrão */
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     border: 1px solid #ccc;
     border-radius: 4px;
     padding: 5px;
-    width: 50%;
+    width: 100%;
     text-align: center;
     font-size: 14px;
     text-transform: uppercase;
 }
-/* Adiciona um fundo personalizado para o select (opcional) */
-select::-ms-expand {
-    display: none; /* Remove no IE e Edge */
-}
 
 input:disabled, select:disabled {
-    border: 2px solid red;  /* Borda vermelha */
-    background-color: #f8d7da; /* Cor de fundo suave para indicar bloqueio */
-    cursor: not-allowed;  /* Cursor de bloqueio */
+    border: 2px solid red;
+    background-color: #f8d7da;
+    cursor: not-allowed;
 }
 
-/* Estilo para o footer */
 footer {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
-    margin-top: 50px; /* Distância do conteúdo principal */
+    margin-top: 50px;
     margin-bottom: 20px;
     font-size: 17px;
     color: #333;
 }
 
 footer a {
-    color: #000; /* Cor do link */
-    text-decoration: none; /* Remove o sublinhado */
+    color: #000;
+    text-decoration: none;
     font-weight: bold;
 }
 
 footer a:hover {
-    text-decoration: underline; /* Adiciona sublinhado no hover */
+    text-decoration: underline;
 }
 
 footer i {
     font-size: 30px;
 }
 
+/* Responsividade: Ajustes para telas menores */
+@media (max-width: 768px) {
+    h1 {
+        font-size: 2rem;
+    }
+
+    #data {
+        font-size: 1.2rem;
+    }
+
+    table {
+        font-size: 0.9rem; /* Reduz o tamanho da fonte na tabela */
+        overflow-x: scroll; /* Permite o scroll horizontal em telas pequenas */
+    }
+
+    td, th {
+        padding: 6px; /* Ajusta o espaçamento nas células */
+    }
+}
+
+@media (max-width: 480px) {
+    h1 {
+        font-size: 1.5rem; /* Tamanho menor para celulares */
+    }
+
+    #data {
+        font-size: 1rem;
+    }
+
+    table {
+        font-size: 0.8rem; /* Tamanho de fonte menor para celular */
+    }
+
+    td, th {
+        padding: 4px; /* Menos padding em celulares */
+    }
+}
+
+@media print {
+    .button-container {
+        display: none; /* Esconde os botões durante a impressão */
+    }
+
+    table {
+        width: 100%;
+        font-size: 12px; /* Ajusta o tamanho da fonte para a impressão */
+    }
+
+    footer {
+        display: none; /* Esconde o footer na impressão */
+    }
+}

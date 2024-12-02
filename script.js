@@ -1,13 +1,9 @@
-// Seleciona o elemento onde a data será exibida
-const dataElement = document.getElementById("data");
-
 // Função para formatar e exibir a data
 function atualizarData() {
     const hoje = new Date();
     const opcoes = { year: 'numeric', month: 'long' };
     const dataFormatada = hoje.toLocaleDateString('pt-BR', opcoes);
-
-    // Exibe a data formatada
+    const dataElement = document.getElementById("data");
     dataElement.textContent = dataFormatada;
 }
 
@@ -15,25 +11,21 @@ function atualizarData() {
 function verificarFimDeSemana(dia, linha) {
     const hoje = new Date();
     const ano = hoje.getFullYear();
-    const mes = hoje.getMonth(); // Lembre-se que os meses em JavaScript são baseados em 0 (0 = janeiro, 11 = dezembro)
+    const mes = hoje.getMonth();
     const data = new Date(ano, mes, dia);
-
-    // Verifica se o dia é sábado (6) ou domingo (0)
     const diaSemana = data.getDay();
-    if (diaSemana === 0 || diaSemana === 6) { // 0 = Domingo, 6 = Sábado
-        // Desabilita os campos de entrada e o select
+    if (diaSemana === 0 || diaSemana === 6) {
         linha.querySelectorAll('input, select').forEach(element => {
             element.disabled = true;
         });
     }
 }
 
-// Função para gerar a tabela e carregar os dados salvos
+// Função para gerar a tabela
 function gerarTabela() {
     const tabela = document.querySelector('tbody');
     for (let dia = 1; dia <= 31; dia++) {
         const tr = document.createElement('tr');
-        
         tr.innerHTML = `
             <td>${dia}</td>
             <td><input type="time" id="chegada-${dia}" placeholder="--:--"></td>
@@ -46,13 +38,8 @@ function gerarTabela() {
                 </select>
             </td>
         `;
-
-        // Verifica se o dia é fim de semana
         verificarFimDeSemana(dia, tr);
-        
         tabela.appendChild(tr);
-
-        // Carrega os dados salvos (se houver)
         carregarDados(dia);
     }
 }
@@ -71,7 +58,6 @@ function salvarDados(dia) {
         modalidade
     };
 
-    // Salva os dados no localStorage
     localStorage.setItem(`dia-${dia}`, JSON.stringify(dadosDia));
 }
 
@@ -80,8 +66,6 @@ function carregarDados(dia) {
     const dadosSalvos = localStorage.getItem(`dia-${dia}`);
     if (dadosSalvos) {
         const { chegada, saidaAlmoco, saida, modalidade } = JSON.parse(dadosSalvos);
-
-        // Preenche os campos com os dados salvos
         document.getElementById(`chegada-${dia}`).value = chegada;
         document.getElementById(`saida-almoco-${dia}`).value = saidaAlmoco;
         document.getElementById(`saida-${dia}`).value = saida;
@@ -89,16 +73,12 @@ function carregarDados(dia) {
     }
 }
 
-// Adiciona um ouvinte para salvar os dados sempre que o usuário alterar um campo
 document.addEventListener('input', (event) => {
     if (event.target.tagName === 'INPUT' || event.target.tagName === 'SELECT') {
-        const dia = event.target.id.split('-')[1]; // Extrai o dia do id do elemento
+        const dia = event.target.id.split('-')[1];
         salvarDados(dia);
     }
 });
 
-// Atualiza a data assim que a página carrega
 atualizarData();
-// Gera a tabela
 gerarTabela();
-
